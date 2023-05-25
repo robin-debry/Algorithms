@@ -23,43 +23,46 @@ public static class ArrayProblems
 
     public static T FirstElement<T>(T[] xs)
     {
+        if (xs.Length < 1)
+        {
+            throw new IndexOutOfRangeException();
+        }
         return xs.First();
     }
 
     public static T LastElement<T>(T[] xs)
     {
+        if (xs.Length < 1)
+        {
+            throw new IndexOutOfRangeException();
+        }
         return xs.Last();
     }
 
     public static T MiddleElement<T>(T[] xs)
     {
 
-        throw new NotImplementedException();
+        if (xs.Length < 1)
+        {
+            throw new IndexOutOfRangeException();
+        }
+        return xs[xs.Length / 2];
     }
 
     public static void Reverse<T>(T[] xs)
     {
+        Array.Reverse(xs);
       
     }
 
     public static int CountElement<T>(T[] xs, T element)
     {
-       return Count(xs, x => x.Equals(element));
+        return xs.Count(x => x.Equals(element));
     }
 
     public static string ToCommaDelimitedString<T>(T[] xs)
     {
-        var r = "";
-        for (var i=0; i<xs.Length;i++)
-        {
-            if (i>0)
-            {
-                r += ",";
-                r += xs[i];
-            }
-            
-        }
-        return r;
+        return string.Join(",", xs);
     }
 
     // Bonus problems
@@ -67,21 +70,38 @@ public static class ArrayProblems
     public static int Count<T>(T[] xs, Func<T, bool> predicate)
     {
 
-        return xs.Count();
+        return xs.Count(x => predicate(x));
     }
 
     public static T Min<T>(T[] xs, Func<T, T, int> comparer)
     {
-        throw new NotImplementedException();
+        if (xs.Length < 1)
+        {
+            throw new IndexOutOfRangeException();
+        }
+        return xs.Min();
     }
 
     public static T Max<T>(T[] xs, Func<T, T, int> comparer)
     {
-        throw new NotImplementedException();
+        if (xs.Length < 1)
+        {
+            throw new IndexOutOfRangeException();
+        }
+        return xs.Max();
     }
 
     public static bool HasDuplicates<T>(T[] xs)
     {
-        throw new NotImplementedException();
+        HashSet<T> set = new HashSet<T>();
+        foreach (T x in xs)
+        {
+            if (set.Contains(x))
+            {
+                return false;
+            }
+            set.Add(x);
+        }
+        return true;
     }
 }
